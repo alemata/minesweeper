@@ -1,3 +1,5 @@
+require 'grape-swagger'
+
 module Minesweeper
   module V1
     class All < Grape::API
@@ -15,6 +17,8 @@ module Minesweeper
       default_format :json
 
       mount Minesweeper::V1::Status
+
+      add_swagger_documentation
     end
   end
 end
