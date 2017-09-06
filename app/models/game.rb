@@ -16,8 +16,18 @@ class Game < ApplicationRecord
   end
 
   def reveal(tile)
+    revealed = tiles.where(mine: false, revealed: true)
+    update(status: :started) if revealed.count.zero?
     tile.reveal!
+    update(status: :lost) if tile.mine
+    update(status: :won) if win?
+
     self
+  end
+
+  def win?
+    revealed = tiles.where(mine: false, revealed: true)
+    revealed.count == tiles.count - mines_count
   end
 
   def add_mines

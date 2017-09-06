@@ -18,4 +18,41 @@ RSpec.describe Game, type: :model do
       expect(t2.neighbor_mines_count).to eql 1
     end
   end
+
+  describe "reveal" do
+    it "should set lost status when revealing a mine" do
+      game = Game.create(rows: 2, columns: 2, mines_count: 0)
+      game.tiles.find_by(row: 0, column: 0).add_mine!
+      game.reload.update_tiles_neighbor_mines
+
+      tile = game.reload.tiles.find_by(row: 0, column: 0)
+      game.reload.reveal(tile)
+      expect(game.reload.status).to eql "lost"
+    end
+
+    it "should not change status if not lost and not won" do
+      game = Game.create(rows: 2, columns: 2, mines_count: 0)
+      game.tiles.find_by(row: 0, column: 0).add_mine!
+      game.reload.update_tiles_neighbor_mines
+
+      tile = game.reload.tiles.find_by(row: 0, column: 1)
+      game.reload.reveal(tile)
+      expect(game.reload.status).to eql "started"
+    end
+
+    it "should set won status if won" do
+      game = Game.create(rows: 2, columns: 2, mines_count: 0)
+      game.tiles.find_by(row: 0, column: 0).add_mine!
+      game.reload.update_tiles_neighbor_mines
+
+      tile = game.reload.tiles.find_by(row: 0, column: 1)
+      game.reload.reveal(tile)
+      tile = game.reload.tiles.find_by(row: 1, column: 0)
+      game.reload.reveal(tile)
+      tile = game.reload.tiles.find_by(row: 1, column: 1)
+      game.reload.reveal(tile)
+
+      expect(game.reload.status).to eql "started"
+    end
+  end
 end
