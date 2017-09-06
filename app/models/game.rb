@@ -13,13 +13,27 @@ class Game < ApplicationRecord
       end
     end
     add_mines
-    #TODO update tile neighbor mines count
   end
 
   def add_mines
     to_add_mines = tiles.sample(mines_count)
     to_add_mines.each do |tile|
-      tile.update(mine: true)
+      tile.add_mine!
+    end
+
+    update_tiles_neighbor_mines
+  end
+
+  # Update tiles neighbor_mines_count for all tiles
+  def update_tiles_neighbor_mines
+    tiles.map(&:update_neighbor_mines_count)
+  end
+
+  def neighbors_for(tile)
+    tiles.select do |t|
+      (tile.row - t.row).abs <= 1 &&
+        (tile.column - t.column).abs <= 1 &&
+        tile != t
     end
   end
 end
