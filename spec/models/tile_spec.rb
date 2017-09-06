@@ -42,4 +42,21 @@ RSpec.describe Tile, type: :model do
       expect(revealed).to eql 1
     end
   end
+
+  describe "toggle_flagged" do
+    it "set flagged when no flagged" do
+      game = Game.create(rows: 4, columns: 3, mines_count: 0)
+      tile = game.tiles.first
+      tile.toggle_flagged!
+      expect(tile.flagged).to be_truthy
+    end
+
+    it "set no flagged when flagged" do
+      game = Game.create(rows: 4, columns: 3, mines_count: 0)
+      tile = game.tiles.first
+      tile.update(flagged: true)
+      tile.toggle_flagged!
+      expect(tile.flagged).to be_falsy
+    end
+  end
 end

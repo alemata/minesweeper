@@ -10,6 +10,10 @@ class Tile < ApplicationRecord
     update(mine: true)
   end
 
+  def toggle_flagged!
+    update(flagged: !flagged)
+  end
+
   def reveal!
     return if revealed
     update(revealed: true)
