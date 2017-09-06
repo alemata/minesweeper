@@ -15,6 +15,11 @@ class Game < ApplicationRecord
     add_mines
   end
 
+  def reveal(tile)
+    tile.reveal!
+    self
+  end
+
   def add_mines
     to_add_mines = tiles.sample(mines_count)
     to_add_mines.each do |tile|

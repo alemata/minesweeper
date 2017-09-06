@@ -9,4 +9,12 @@ class Tile < ApplicationRecord
   def add_mine!
     update(mine: true)
   end
+
+  def reveal!
+    return if revealed
+    update(revealed: true)
+    if !mine && neighbor_mines_count.zero?
+      game.neighbors_for(self).map(&:reveal!)
+    end
+  end
 end

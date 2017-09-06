@@ -16,4 +16,30 @@ RSpec.describe Tile, type: :model do
       expect(t4.reload.neighbor_mines_count).to eql 1
     end
   end
+
+  describe "reveal" do
+    it "should reveal adjacents if neighbor_mines_count == 0" do
+      game = Game.create(rows: 4, columns: 3, mines_count: 0)
+      game.tiles.find_by(row: 2, column: 1).add_mine!
+      game.tiles.find_by(row: 3, column: 0).add_mine!
+      game.tiles.find_by(row: 2, column: 2).add_mine!
+      game.reload.update_tiles_neighbor_mines
+
+      game.reload.tiles.find_by(row: 0, column: 0).reveal!
+      revealed = game.reload.tiles.select { |t| t.revealed? }.count
+      expect(revealed).to eql 6
+    end
+
+    it "should not reveal adjacents if neighbor_mines_count > 0" do
+      game = Game.create(rows: 4, columns: 3, mines_count: 0)
+      game.tiles.find_by(row: 2, column: 1).add_mine!
+      game.tiles.find_by(row: 3, column: 0).add_mine!
+      game.tiles.find_by(row: 2, column: 2).add_mine!
+      game.reload.update_tiles_neighbor_mines
+
+      game.reload.tiles.find_by(row: 2, column: 2).reveal!
+      revealed = game.reload.tiles.select { |t| t.revealed? }.count
+      expect(revealed).to eql 1
+    end
+  end
 end
