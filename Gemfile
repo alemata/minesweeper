@@ -36,13 +36,16 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'grape'
+gem 'hashie-forbidden_attributes'
 gem 'grape-swagger-rails'
 gem 'grape-swagger'
+gem 'grape-active_model_serializers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.6'
+  gem 'pry'
 end
 
 group :development do
