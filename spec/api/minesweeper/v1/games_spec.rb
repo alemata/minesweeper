@@ -4,7 +4,7 @@ describe Minesweeper::V1::Games do
   describe "POST /api/games" do
     it "returns a new game" do
       expect do
-        post "/api/games", params: { rows: 4, columns: 3, mines_count: 2}
+        post "/api/games", params: { rows: 4, columns: 3, mines_count: 2 }
       end.to change(Game, :count).by(1)
       expect(response).to have_http_status(201)
       r = JSON.parse(response.body)

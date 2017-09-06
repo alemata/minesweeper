@@ -26,7 +26,7 @@ RSpec.describe Tile, type: :model do
       game.reload.update_tiles_neighbor_mines
 
       game.reload.tiles.find_by(row: 0, column: 0).reveal!
-      revealed = game.reload.tiles.select { |t| t.revealed? }.count
+      revealed = game.reload.tiles.select(&:revealed?).count
       expect(revealed).to eql 6
     end
 
@@ -38,7 +38,7 @@ RSpec.describe Tile, type: :model do
       game.reload.update_tiles_neighbor_mines
 
       game.reload.tiles.find_by(row: 2, column: 2).reveal!
-      revealed = game.reload.tiles.select { |t| t.revealed? }.count
+      revealed = game.reload.tiles.select(&:revealed?).count
       expect(revealed).to eql 1
     end
   end

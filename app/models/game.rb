@@ -32,9 +32,7 @@ class Game < ApplicationRecord
 
   def add_mines
     to_add_mines = tiles.sample(mines_count)
-    to_add_mines.each do |tile|
-      tile.add_mine!
-    end
+    to_add_mines.each(&:add_mine!)
 
     update_tiles_neighbor_mines
   end

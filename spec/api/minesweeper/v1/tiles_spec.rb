@@ -13,7 +13,7 @@ describe Minesweeper::V1::Tiles do
       post "/api/games/#{game.id}/tiles/#{tile.id}/reveal"
       expect(response).to have_http_status(201)
       r = JSON.parse(response.body)
-      revealed_count = r["tiles"].select{ |t| t["revealed"] }.count
+      revealed_count = r["tiles"].select { |t| t["revealed"] }.count
       expect(revealed_count).to be_eql 6
       expect(r["status"]).to be_eql "started"
     end
