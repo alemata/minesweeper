@@ -17,16 +17,9 @@ class Game < ApplicationRecord
   end
 
   def add_mines
-    added = 0
-    loop do
-      row = rand(rows)
-      col = rand(columns)
-      tile = tiles.find_by(row: row, column: col)
-      if !tile.mine?
-        tile.update(mine: true)
-        added += 1
-      end
-      break if added == mines_count
+    to_add_mines = tiles.sample(mines_count)
+    to_add_mines.each do |tile|
+      tile.update(mine: true)
     end
   end
 end
