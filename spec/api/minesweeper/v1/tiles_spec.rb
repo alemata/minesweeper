@@ -25,7 +25,6 @@ describe Minesweeper::V1::Tiles do
       tile = game.tiles.first
       post "/api/games/#{game.id}/tiles/#{tile.id}/toggle_flag"
       r = JSON.parse(response.body)
-      require 'pry'; binding.pry
       expect(r["flagged"]).to be true
     end
 

@@ -1,0 +1,34 @@
+<div class="container-fluid" ng-app="minesweeper">
+</div>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Minesweeper</h1>
+  </div>
+  <div class="panel panel-success">
+    <div class="row" ng-controller="EventsCtrl">
+      <div class="col-md-12">
+        <div ng-if="game.status != 'started'">
+          You {{game.status}}!
+        </div>
+        <table id="board" class="table table-striped">
+          <tbody>
+            <tr ng-repeat="tile_row in tile_rows">
+              <td ng-repeat="tile in tile_row" ng-click="reveal(tile)" ng-right-click="toggleFlag(tile)" ng-class="{ 'revealed': tile.revealed || (game.status == 'lost' && tile.mine) }">
+                <i ng-if="tile.flagged && !tile.revealed" class="fa fa-flag"></i>
+                <i ng-if="game.status == 'lost' && tile.mine" class="fa fa-bomb"></i>
+                <div ng-if="tile.revealed">
+                  <p ng-if="!tile.mine && tile.neighbor_mines_count > 0">
+                    {{tile.neighbor_mines_count}}
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-primary" ng-click="createNewGame()">Create new game</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,8 @@ class Game < ApplicationRecord
     self.rows ||= 10
     self.columns ||= 10
     self.mines_count ||= 4
+    self.status = :started
+    self.save
     rows.times do |row|
       columns.times do |column|
         tiles << Tile.create(row: row, column: column)
@@ -16,8 +18,6 @@ class Game < ApplicationRecord
   end
 
   def reveal(tile)
-    revealed = tiles.where(mine: false, revealed: true)
-    update(status: :started) if revealed.count.zero?
     tile.reveal!
     update(status: :lost) if tile.mine
     update(status: :won) if win?
