@@ -12,5 +12,42 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require angular/angular
 //= require_tree .
+
+minesweeper = angular.module('minesweeper',[
+])
+
+minesweeper.controller('EventsCtrl', ['$scope', '$http', function($scope, $http) {
+  $scope.reveal = function(tile) {
+    if ($scope.game.status == 'started' && !tile.revealed){
+      $scope.doReveal(tile);
+    }
+  }
+
+  // Api Methods
+  $scope.doReveal = function(tile){
+    $http.post(`http://localhost:3000/api/games/${$scope.game.id}/tiles/${tile.id}/reveal`).
+          then(function(response) {
+              $scope.loadGameData(response.data)
+          });
+  }
+
+  $scope.createNewGame = function(tile){
+    $http.post('http://localhost:3000/api/games', { rows: 2, columns: 2, mines_count: 2}).
+          then(function(response) {
+              $scope.loadGameData(response.data)
+          });
+  }
+
+  $scope.loadGameData = function(data){
+    $scope.game = data;
+    $scope.tile_rows = [], size = $scope.game.rows;
+
+    while ($scope.game.tiles.length > 0)
+      $scope.tile_rows.push($scope.game.tiles.splice(0, size));
+  }
+
+  // Initially create a new game
+  $scope.createNewGame();
+}]);
