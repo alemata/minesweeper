@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170906202028) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "games", force: :cascade do |t|
     t.string   "status"
     t.integer  "rows"
@@ -31,7 +34,8 @@ ActiveRecord::Schema.define(version: 20170906202028) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.boolean  "flagged"
-    t.index ["game_id"], name: "index_tiles_on_game_id"
+    t.index ["game_id"], name: "index_tiles_on_game_id", using: :btree
   end
 
+  add_foreign_key "tiles", "games"
 end
