@@ -1,6 +1,8 @@
 class Tile < ApplicationRecord
   belongs_to :game
 
+  default_scope { order(created_at: :desc) }
+
   def update_neighbor_mines_count
     mines_count = game.neighbors_for(self).select(&:mine?).size
     update(neighbor_mines_count: mines_count)

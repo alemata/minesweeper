@@ -4,8 +4,8 @@ class Game < ApplicationRecord
   after_create :setup_game
 
   def setup_game
-    self.rows ||= 10
-    self.columns ||= 10
+    self.rows ||= 6
+    self.columns ||= 5
     self.mines_count ||= 4
     self.status = :started
     self.save
