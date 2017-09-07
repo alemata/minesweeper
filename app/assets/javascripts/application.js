@@ -53,7 +53,7 @@ minesweeper.controller('EventsCtrl', ['$scope', '$http', function($scope, $http)
   }
 
   $scope.createNewGame = function(tile){
-    $http.post("http://amataloni-minesweeper.herokuapp.com/api/games", { rows: 2, columns: 2, mines_count: 2}).
+    $http.post("http://amataloni-minesweeper.herokuapp.com/api/games", { rows: $scope.rows, columns: $scope.columns, mines_count: $scope.mines_count}).
           then(function(response) {
               $scope.loadGameData(response.data)
           });
