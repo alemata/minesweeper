@@ -18,6 +18,18 @@
 minesweeper = angular.module('minesweeper',[
 ])
 
+minesweeper.directive('ngRightClick', function($parse) {
+    return function(scope, element, attrs) {
+        var fn = $parse(attrs.ngRightClick);
+        element.bind('contextmenu', function(event) {
+            scope.$apply(function() {
+                event.preventDefault();
+                fn(scope, {$event:event});
+            });
+        });
+    };
+});
+
 minesweeper.controller('EventsCtrl', ['$scope', '$http', function($scope, $http) {
   $scope.reveal = function(tile) {
     if ($scope.game.status == 'started' && !tile.revealed){
@@ -30,6 +42,13 @@ minesweeper.controller('EventsCtrl', ['$scope', '$http', function($scope, $http)
     $http.post(`http://localhost:3000/api/games/${$scope.game.id}/tiles/${tile.id}/reveal`).
           then(function(response) {
               $scope.loadGameData(response.data)
+          });
+  }
+
+  $scope.toggleFlag = function(tile){
+    $http.post(`http://localhost:3000/api/games/${$scope.game.id}/tiles/${tile.id}/toggle_flag`).
+          then(function(response) {
+              tile.flagged = !tile.flagged;
           });
   }
 

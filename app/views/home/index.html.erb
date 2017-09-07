@@ -14,7 +14,8 @@
         <table id="board" class="table table-striped">
           <tbody>
             <tr ng-repeat="tile_row in tile_rows">
-              <td ng-repeat="tile in tile_row" ng-click="reveal(tile)" ng-class="{ 'revealed': tile.revealed || (game.status == 'lost' && tile.mine) }">
+              <td ng-repeat="tile in tile_row" ng-click="reveal(tile)" ng-right-click="toggleFlag(tile)" ng-class="{ 'revealed': tile.revealed || (game.status == 'lost' && tile.mine) }">
+                <i ng-if="tile.flagged && !tile.revealed" class="fa fa-flag"></i>
                 <i ng-if="game.status == 'lost' && tile.mine" class="fa fa-bomb"></i>
                 <div ng-if="tile.revealed">
                   <p ng-if="!tile.mine && tile.neighbor_mines_count > 0">
