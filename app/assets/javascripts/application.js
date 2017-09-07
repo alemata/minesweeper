@@ -39,21 +39,21 @@ minesweeper.controller('EventsCtrl', ['$scope', '$http', function($scope, $http)
 
   // Api Methods
   $scope.doReveal = function(tile){
-    $http.post("http://localhost:3000/api/games/" + $scope.game.id + "/tiles/" + tile.id + "/reveal").
+    $http.post("http://amataloni-minesweeper.herokuapp.com/api/games/" + $scope.game.id + "/tiles/" + tile.id + "/reveal").
           then(function(response) {
               $scope.loadGameData(response.data)
           });
   }
 
   $scope.toggleFlag = function(tile){
-    $http.post("http://localhost:3000/api/games/" + $scope.game.id + "/tiles/" + tile.id + "/toggle_flag").
+    $http.post("http://amataloni-minesweeper.herokuapp.com/api/games/" + $scope.game.id + "/tiles/" + tile.id + "/toggle_flag").
           then(function(response) {
               tile.flagged = !tile.flagged;
           });
   }
 
   $scope.createNewGame = function(tile){
-    $http.post("http://localhost:3000/api/games", { rows: 2, columns: 2, mines_count: 2}).
+    $http.post("http://amataloni-minesweeper.herokuapp.com/api/games", { rows: 2, columns: 2, mines_count: 2}).
           then(function(response) {
               $scope.loadGameData(response.data)
           });
