@@ -18,7 +18,7 @@
 minesweeper = angular.module('minesweeper',[
 ])
 
-minesweeper.directive('ngRightClick', function($parse) {
+minesweeper.directive('ngRightClick', ['$parse', function($parse) {
     return function(scope, element, attrs) {
         var fn = $parse(attrs.ngRightClick);
         element.bind('contextmenu', function(event) {
@@ -28,7 +28,7 @@ minesweeper.directive('ngRightClick', function($parse) {
             });
         });
     };
-});
+}]);
 
 minesweeper.controller('EventsCtrl', ['$scope', '$http', function($scope, $http) {
   $scope.reveal = function(tile) {
