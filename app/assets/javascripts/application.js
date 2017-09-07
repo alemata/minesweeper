@@ -61,7 +61,7 @@ minesweeper.controller('EventsCtrl', ['$scope', '$http', function($scope, $http)
 
   $scope.loadGameData = function(data){
     $scope.game = data;
-    $scope.tile_rows = [], size = $scope.game.rows;
+    $scope.tile_rows = [], size = $scope.game.columns;
 
     while ($scope.game.tiles.length > 0)
       $scope.tile_rows.push($scope.game.tiles.splice(0, size));
