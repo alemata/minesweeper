@@ -10,6 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20170906202028) do
+
+  create_table "games", force: :cascade do |t|
+    t.string   "status"
+    t.integer  "rows"
+    t.integer  "columns"
+    t.integer  "mines_count"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "tiles", force: :cascade do |t|
+    t.integer  "row"
+    t.integer  "column"
+    t.boolean  "mine",                 default: false
+    t.boolean  "revealed",             default: false
+    t.integer  "game_id"
+    t.integer  "neighbor_mines_count", default: 0
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.boolean  "flagged"
+    t.index ["game_id"], name: "index_tiles_on_game_id"
+  end
 
 end
