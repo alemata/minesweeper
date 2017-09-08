@@ -8,3 +8,11 @@ Minesweeper exercice
 I know there are more performant implementations, but those are not as descriptive as a Object Oriented way (and with a normalized db). I expect to be assessed on the quality of the code and readability rather than performance. If the intention of this exercise is to be performant, I have solution for that too. (I will develop it later just for fun!)
 
 - I have been focused on a robust backend, well tested and then moved to the client side, that should explain why I did a poor UI/UX in that short period of time. Also I would have added client side tests.
+
+
+# TODOS: Items which I would do If I had more time
+- Add client side tests
+- Improve client side code
+- Improve UI/UX
+- Improve performance
+- Use env variables for api base url
